@@ -1,135 +1,185 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Hey Pinkulu❤️ 💌</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Hey Pinkulu</title>
   <style>
-    body {
-      margin: 0;
-      height: 100vh;
-      font-family: 'Segoe UI', sans-serif;
-      background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%);
-      color: #fff;
-      overflow: hidden;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
+    :root{
+      --yes-bg: #ff6b81;
+      --no-bg: #e0e0e0;
+      --body-bg: #fff8fb;
+      --text: #333;
     }
-    .container {
-      max-width: 600px;
-      padding: 30px;
-      background: rgba(255,255,255,0.15);
-      border-radius: 20px;
-      backdrop-filter: blur(10px);
-      box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+    html,body{height:100%;margin:0}
+    body{
+      background: var(--body-bg);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      color:var(--text);
+      display:flex;
+      align-items:center;
+      justify-content:center;
     }
-    h1 { font-size: 3.2rem; margin: 0.4em 0; color: #fff; text-shadow: 0 0 10px #ff6b6b; }
-    p  { font-size: 1.4rem; margin: 1em 0; }
-    .buttons { margin: 2.5em 0; display: flex; gap: 3em; justify-content: center; flex-wrap: wrap; }
-    button {
-      font-size: 1.6rem;
-      padding: 16px 48px;
-      border: none;
-      border-radius: 50px;
-      cursor: pointer;
-      transition: all 0.3s;
-      box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+    .card{
+      text-align:center;
+      padding:36px;
+      border-radius:14px;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+      background: linear-gradient(180deg, rgba(255,255,255,0.9), rgba(255,245,250,0.95));
+      width: min(680px, 92%);
     }
-    #yesBtn {
-      background: #ff4757;
-      color: white;
+    h1{margin:0 0 22px 0; font-size:28px}
+    .buttons{
+      margin-top:18px;
+      display:flex;
+      gap:18px;
+      justify-content:center;
+      align-items:center;
     }
-    #yesBtn:hover { transform: scale(1.15); background: #ff6b81; }
-    #noBtn {
-      background: #57606f;
-      color: white;
-      position: relative;
+
+    button{
+      cursor:pointer;
+      border:0;
+      padding:14px 28px;
+      font-size:18px;
+      border-radius:10px;
+      transition: transform 260ms cubic-bezier(.2,.9,.2,1), opacity 300ms, left 240ms, top 240ms;
+      transform-origin:center;
+      user-select:none;
+      position:relative; /* needed for playful offsets */
     }
-    .heart {
-      position: absolute;
-      font-size: 1.8rem;
-      animation: float 6s infinite linear;
-      pointer-events: none;
-      opacity: 0.7;
+
+    #yesBtn{
+      background:var(--yes-bg);
+      color:white;
+      box-shadow: 0 6px 18px rgba(255,107,129,0.25), inset 0 -2px 0 rgba(0,0,0,0.04);
+      transform: scale(1);
+      transition: transform 220ms cubic-bezier(.2,.9,.2,1), box-shadow 220ms;
     }
-    @keyframes float {
-      0%   { transform: translateY(110vh) rotate(0deg); }
-      100% { transform: translateY(-20vh) rotate(360deg); }
+
+    #noBtn{
+      background:var(--no-bg);
+      color:#444;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.06);
+      transform: scale(1);
+      transition: transform 260ms cubic-bezier(.2,.9,.2,1), left 260ms, top 260ms, opacity 420ms;
     }
-    #celebration {
-      display: none;
-      font-size: 4rem;
-      margin: 0.5em;
-      animation: bounce 1.2s infinite;
+
+    /* hidden helper class */
+    .invisible{
+      opacity:0 !important;
+      transform: scale(0.08) !important;
+      pointer-events:none !important;
     }
-    @keyframes bounce {
-      0%,100% { transform: translateY(0); }
-      50%     { transform: translateY(-20px); }
+
+    /* mobile-friendly spacing */
+    @media (max-width:420px){
+      button{font-size:16px;padding:12px 18px}
+      h1{font-size:20px}
     }
   </style>
 </head>
 <body>
-
-  <div class="container">
-    <h1>Hey Keerthi 💕</h1>
-    <p>I made something special just for you...</p>
-    <h2>Will you be my Valentine? 🥺❤️</h2>
+  <div class="card" role="main" aria-labelledby="q">
+    <h1 id="q">Will you be my Valentine?</h1>
 
     <div class="buttons">
-      <button id="yesBtn">Yes!! 😍</button>
-      <button id="noBtn">No 😢</button>
+      <button id="yesBtn" aria-label="Yes, I will">Yes 💖</button>
+      <button id="noBtn" aria-label="No, I won't">No 😅</button>
     </div>
-
-    <div id="celebration">YAYYYYY!!! ❤️❤️❤️<br>I LOVE YOU SO MUCH!!</div>
   </div>
 
   <script>
-    const yes = document.getElementById("yesBtn");
-    const no  = document.getElementById("noBtn");
-    const celebration = document.getElementById("celebration");
+    (function(){
+      const yes = document.getElementById('yesBtn');
+      const no = document.getElementById('noBtn');
 
-    // Moving No button
-    no.addEventListener("mouseover", () => {
-      const x = Math.random() * (window.innerWidth - 200);
-      const y = Math.random() * (window.innerHeight - 200);
-      no.style.position = "absolute";
-      no.style.left = x + "px";
-      no.style.top  = y + "px";
-    });
+      // State
+      let attempts = 0;            // increments whenever she tries to hit "No"
+      const scaleStep = 0.18;      // how much Yes scales per attempt
+      const maxYesScale = 3.0;     // cap for Yes scale
+      const vanishAfter = 6;       // attempts until No disappears
+      const maxJitter = 120;       // px for lateral jitter
 
-    // Yes → celebration
-    yes.addEventListener("click", () => {
-      document.querySelector("h2").innerHTML = "You said YES!!! 🥰💖";
-      celebration.style.display = "block";
-      no.style.display = "none";
-      yes.style.display = "none";
-
-      // Extra hearts explosion
-      for(let i = 0; i < 30; i++) {
-        let heart = document.createElement("div");
-        heart.className = "heart";
-        heart.innerHTML = "❤️";
-        heart.style.left = Math.random()*100 + "vw";
-        heart.style.animationDuration = (Math.random()*4 + 3) + "s";
-        heart.style.fontSize = (Math.random()*1.5 + 1.2) + "rem";
-        document.body.appendChild(heart);
-        setTimeout(() => heart.remove(), 7000);
+      // Update Yes button size based on attempts
+      function updateYes(){
+        const newScale = Math.min(1 + attempts * scaleStep, maxYesScale);
+        yes.style.transform = `scale(${newScale})`;
+        // Optionally amplify shadow for bigger sizes
+        yes.style.boxShadow = `0 ${4 + attempts*2}px ${12 + attempts*3}px rgba(255,107,129,${0.16 + Math.min(attempts*0.03,0.24)})`;
       }
-    });
 
-    // Background floating hearts
-    setInterval(() => {
-      let h = document.createElement("div");
-      h.className = "heart";
-      h.innerHTML = Math.random() > 0.5 ? "💗" : "💞";
-      h.style.left = Math.random()*100 + "vw";
-      h.style.animationDuration = (Math.random()*8 + 6) + "s";
-      document.body.appendChild(h);
-      setTimeout(() => h.remove(), 15000);
-    }, 800);
+      // Playful relocation + shrink for No, and eventually hide it
+      function handleNoAttempt(e){
+        // Prevent default on touch/click to avoid double increments from touch->click
+        if (e.type === 'touchstart') e.preventDefault();
+
+        attempts = Math.max(0, attempts + 1);
+        updateYes();
+
+        // tiny shuffle so it's harder to hit repeatedly exactly in the same spot
+        const jitterX = Math.round((Math.random() - 0.5) * maxJitter);
+        const jitterY = Math.round((Math.random() - 0.5) * 30);
+        no.style.left = jitterX + 'px';
+        no.style.top = jitterY + 'px';
+
+        // progressively shrink the No button as attempts increase (visual feedback)
+        const shrinkScale = Math.max(1 - attempts * 0.08, 0.55);
+        no.style.transform = `scale(${shrinkScale})`;
+
+        // At threshold: dramatically shrink + fade + disable
+        if (attempts >= vanishAfter){
+          // small delay so last animation finishes naturally
+          setTimeout(() => {
+            no.classList.add('invisible');
+            // keep in DOM for layout or remove from flow entirely after animation
+            setTimeout(() => {
+              // remove from layout so it doesn't leave empty space
+              no.style.display = 'none';
+            }, 500);
+          }, 180);
+        }
+      }
+
+      // Reset position after transition ends to avoid cumulative offsets
+      no.addEventListener('transitionend', (ev) => {
+        if (ev.propertyName === 'left' || ev.propertyName === 'top') {
+          // only reset if still visible
+          if (getComputedStyle(no).display !== 'none' && !no.classList.contains('invisible')) {
+            no.style.left = '0';
+            no.style.top = '0';
+          }
+        }
+      });
+
+      // Bind multiple "attempt" events so hovering, touching, or clicking counts
+      ['mouseenter', 'mousedown', 'touchstart', 'click'].forEach(evt => {
+        no.addEventListener(evt, handleNoAttempt, {passive:false});
+      });
+
+      // Yes button action
+      yes.addEventListener('click', () => {
+        // cute confirmation — replace with your own behaviour
+        const original = yes.innerHTML;
+        yes.innerHTML = '💘 Thank you!';
+        yes.style.transform = 'scale(1.25)';
+        setTimeout(() => {
+          yes.style.transform = '';
+          yes.innerHTML = original;
+        }, 1200);
+      });
+
+      // Accessibility: keyboard support for No (space/enter)
+      no.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          handleNoAttempt(e);
+        }
+      });
+
+      // Optional: expose tuning values to window for quick adjustments in console
+      window._valentineTuning = { setAttempts(n){ attempts = n; updateYes(); } };
+    })();
   </script>
-
 </body>
 </html>
